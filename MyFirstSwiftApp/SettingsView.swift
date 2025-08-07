@@ -63,7 +63,7 @@ struct SettingsView: View {
                         SettingsRowView(iconName: "questionmark.circle.fill", title: "Help", iconColor: .orange)
                     }
                 }.listStyle(InsetGroupedListStyle())
-            }
+            }.navigationTitle("Settings")
         }
     }
 }
@@ -75,7 +75,6 @@ struct SettingsRowView: View {
 
     var body: some View {
         HStack(spacing: 15) {
-            // The colored icon on the left
             Image(systemName: iconName)
                 .font(.headline)
                 .foregroundColor(.white)
@@ -83,18 +82,15 @@ struct SettingsRowView: View {
                 .background(iconColor)
                 .cornerRadius(8)
 
-            // The title of the setting
             Text(title)
                 .font(.body)
             
-            // A spacer pushes the chevron to the far right
             Spacer()
 
-            // The right-arrow icon
             Image(systemName: "chevron.right")
                 .foregroundColor(.secondary)
         }
-        .padding(.vertical, 4) // Adds a little vertical padding to make rows feel less cramped
+        .padding(.vertical, 4)
     }
 }
 

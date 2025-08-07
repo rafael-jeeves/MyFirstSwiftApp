@@ -25,45 +25,73 @@ struct User {
 
 struct SettingsView: View {
     
-    let user = User(firstName: "Rafael", lastName: "Evangelista", email: "rafael.evangelista@tryjeeves.com")
+    let mockedUser = User(firstName: "Rafael", lastName: "Evangelista", email: "rafael.evangelista@tryjeeves.com")
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 20){
-                VStack(spacing:8){
-                    ZStack{
+            // The List is now the main container for all content.
+            // The outer VStack has been removed.
+            List {
+                // --- USER INFO HEADER ---
+                // This VStack is now the first item inside the List, so it will scroll.
+                VStack(spacing: 8) {
+                    ZStack {
                         Circle()
                             .fill(Color.blue.opacity(0.8))
                             .frame(width: 140, height: 140)
                         
-                        Text(user.initials)
+                        Text(mockedUser.initials)
                             .font(.system(size: 60, weight: .bold))
                             .foregroundColor(.white)
                     }
                     
-                    
-                    Text(user.fullName)
+                    Text(mockedUser.fullName)
                         .font(.title)
                         .fontWeight(.semibold)
                     
-                    Text(user.email)
+                    Text(mockedUser.email)
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
-                .padding(.top)
+                // --- MODIFIERS FOR HEADER STYLING ---
+                // This centers the VStack content horizontally within the list cell.
+                .frame(maxWidth: .infinity, alignment: .center)
+                // This removes the default padding that the list adds to its rows.
+                .listRowInsets(EdgeInsets())
+                // This makes the background of the header's "cell" transparent.
+                .listRowBackground(Color.clear)
+                // Add some vertical padding to give it space.
+                .padding(.vertical, 20)
                 
-                List{
-                    Section(header:Text("Account")){
-                        SettingsRowView(iconName: "person.fill", title: "Edit Profile", iconColor: .blue)
-                        SettingsRowView(iconName: "lock.fill", title: "Change Password", iconColor: .gray)
-                    }
-                    Section(header:Text("App")){
-                        SettingsRowView(iconName: "bell.fill", title: "Notifications", iconColor: .red)
-                        SettingsRowView(iconName: "hand.raised.fill", title: "Edit Profile", iconColor: .green)
-                        SettingsRowView(iconName: "questionmark.circle.fill", title: "Help", iconColor: .orange)
-                    }
-                }.listStyle(InsetGroupedListStyle())
-            }.navigationTitle("Settings")
+                Section(header: Text("Account")) {
+                                // Each row is now wrapped in a NavigationLink
+                                NavigationLink(destination: EditProfileView()) {
+                                    SettingsRowView(iconName: "person.fill", title: "Edit Profile", iconColor: .blue)
+                                }
+                                
+                                // This one links to the view you provided
+                                NavigationLink(destination: ChangePasswordView()) {
+                                    SettingsRowView(iconName: "lock.fill", title: "Change Password", iconColor: .gray)
+                                }
+                            }
+                            
+                            // --- APP SECTION ---
+                            Section(header: Text("App")) {
+                                NavigationLink(destination: NotificationsView()) {
+                                    SettingsRowView(iconName: "bell.fill", title: "Notifications", iconColor: .red)
+                                }
+                                
+                                NavigationLink(destination: PrivacyView()) {
+                                    SettingsRowView(iconName: "hand.raised.fill", title: "Privacy", iconColor: .green)
+                                }
+                                
+                                NavigationLink(destination: HelpView()) {
+                                    SettingsRowView(iconName: "questionmark.circle.fill", title: "Help", iconColor: .orange)
+                                }
+                            }
+            }
+            .listStyle(InsetGroupedListStyle())
+            .navigationTitle("Settings")
         }
     }
 }
@@ -85,10 +113,10 @@ struct SettingsRowView: View {
             Text(title)
                 .font(.body)
             
+            // A Spacer is still useful to make the whole row tappable
             Spacer()
 
-            Image(systemName: "chevron.right")
-                .foregroundColor(.secondary)
+            // The manual chevron Image has been removed from here.
         }
         .padding(.vertical, 4)
     }

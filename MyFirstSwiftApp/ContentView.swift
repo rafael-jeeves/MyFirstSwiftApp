@@ -31,11 +31,11 @@ struct ContentView: View {
     )
     
     let mockedTransactions: [Transaction] = [
-        Transaction(merchant: "Apple Store", amount: 999.00, date: "Aug 7", iconName: "apple.logo", color: .black),
+        Transaction(merchant: "Apple Store", amount: -999.00, date: "Aug 7", iconName: "apple.logo", color: .black),
         Transaction(merchant: "Gas Station", amount: 45.50, date: "Aug 6", iconName: "fuelpump.fill", color: .orange),
         Transaction(merchant: "Grocery Store", amount: 78.21, date: "Aug 5", iconName: "cart.fill", color: .green),
         Transaction(merchant: "Coffee Shop", amount: 5.75, date: "Aug 5", iconName: "cup.and.saucer.fill", color: .brown),
-        Transaction(merchant: "Bookstore", amount: 25.00, date: "Aug 4", iconName: "book.fill", color: .blue)
+        Transaction(merchant: "Bookstore", amount: -25.00, date: "Aug 4", iconName: "book.fill", color: .blue)
             
     ]
     
@@ -127,9 +127,14 @@ struct TransactionRowView: View {
 
             Spacer()
 
+            let valueColor = transaction.amount < 0 ? Color.red : Color.green
+                       
+            let formattedValue = String(format: "$%.2f", transaction.amount)
+            
             // The expense amount
-            Text(String(format: "-$%.2f", transaction.amount))
+            Text(formattedValue)
                 .fontWeight(.bold)
+                .foregroundColor(valueColor)
         }
         .padding(.vertical, 8)
     }

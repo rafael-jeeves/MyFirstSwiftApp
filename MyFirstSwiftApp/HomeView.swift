@@ -23,7 +23,7 @@ struct Transaction: Identifiable {
     let color : Color
 }
 
-struct ContentView: View {
+struct HomeView: View {
     let mockedCard = CardInfo(
         cardholderName: "Rafael Evangelista",
         lastFourDigits: "1234",

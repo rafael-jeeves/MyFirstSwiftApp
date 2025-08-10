@@ -4,10 +4,10 @@
 This is a simple iOS app, with two main screens:
 
 ## HomeView.swift
-![Home Screenshot](home.png)
+<img src="home.png" alt="drawing" width="200"/>
 
 ## SettingsView.swift
-![Settings Screenshot](settings.png)
+<img src="settings.png" alt="drawing" width="200"/>
 
 ### In Settings, we have access to other screens:
  - Edit Profile
